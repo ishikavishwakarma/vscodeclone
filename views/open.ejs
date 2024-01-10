@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <div id="main">
+        
+        <div id="nav">
+            <div id="prt1">
+                <img src="../images/vsicon1-removebg-preview.png" alt="">
+                <h3>File</h3>
+                <h3>Edit</h3>
+                <h3>Selection</h3>
+                <h3>View</h3>
+                <h3>Go</h3>
+                <!-- <i class="ri-more-line"></i> -->
+                <i class="ri-more-fill"></i>
+                <i class="ri-arrow-left-line"></i>
+                <i class="ri-arrow-right-line"></i>
+            </div>
+            <div id="prt2">
+                <input type="text" placeholder="vscodeclone">
+            </div>
+            <div id="prt3">
+                <i class="ri-layout-column-fill"></i>
+                <i class="ri-layout-row-fill"></i>
+                <i class="ri-layout-right-line"></i>
+                <i class="ri-layout-2-fill"></i>
+                <i class="ri-subtract-fill"></i>
+                <i class="ri-file-copy-line"></i>
+                <i class="ri-close-line"></i>
+            </div>
+        </div>
+        <div id="center">
+            <div id="left">
+                <div id="filedets">
+                    <h3>vs code clone</h3>
+                    <div id="icons">
+                        <i id="fileicon" class="ri-add-line"></i>
+                        <i id="foldericon" class="ri-folder-fill"></i>
+                       <a href="/back"> <i class="ri-refresh-line"></i></a>
+                    </div>
+                </div>
+                <div id="files">
+                    <form id="fileform" action="/createfile">
+                        <input type="text" name="filename" placeholder="filename">
+                    </form>
+                    <form id="folderform" action="/createfolder">
+                        <input type="text" name="foldername" placeholder="foldername">
+                    </form>
+                    <% elems.forEach(function(val){ %>
+                        <div class="elem">
+                            <div class="elleft">
+                                <% if(val.isDirectory()){%>
+                                    <i class="ri-folder-line"></i>
+                                    <%= val.name %>
+                                        <% } else { %>
+                                            <i class="ri-file-3-line"></i>
+                                            <a href="/file/<%= val.name %>">
+                                                <%= val.name %>
+                                            </a>
+                                            <% } %>
+                            </div>
+                            <div class="elright">
+                                <i class="ri-pencil-fill"></i>
+                                <% if(val.isDirectory()){ %>
+                                    <a href="/delete/folder/<%= val.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                                    <% } else{ %>
+                                    <a href="/delete/file/<%= val.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                                        <% } %>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+            <div id="right">
+                <div class="rgt-nav">
+                    <h4><%= filename %> <a href="/"><i class="ri-close-line"></i></a></h4>
+                </div>
+                <form action="/update/<%= filename%>" method="post">
+                    <textarea name="data" style="resize: none;"><%= filedata %> </textarea>
+                    <input  id="submitbtn" type="submit" value="save file">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function donoOffKaro() {
+            document.querySelectorAll("#files form")
+                .forEach(function (frm) {
+                    frm.style.display = "none";
+                })
+        }
+
+        document.querySelector("#fileicon")
+            .addEventListener("click", function () {
+                donoOffKaro();
+                document.querySelector("#fileform").style.display = "block";
+            });
+
+        document.querySelector("#foldericon")
+            .addEventListener("click", function () {
+                donoOffKaro();
+                document.querySelector("#folderform").style.display = "block";
+            });
+    </script>
+</body>
+
+</html>
